@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/octoblu/tattle/logentry"
+	"github.com/octoblu/go-logentry/logentry"
 )
 
 // Wrapper wraps in silence
