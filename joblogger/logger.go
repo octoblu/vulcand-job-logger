@@ -1,17 +1,24 @@
 package joblogger
 
-import (
-	"fmt"
-	"net/http"
-	"os"
-	"time"
+// var redisConnections map[string]redis.Conn
+//
+//
+// 	conn, err := acquireConnection(RedisURI, RedisQueueName)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// func acquireConnection(RedisURI, RedisQueueName string) (redis.Conn, error) {
+// 	key := fmt.Sprintf("%v/%v", RedisURI, RedisQueueName)
+// 	conn, ok := redisConnections[key]
+// 	if ok {
+// 		return conn
+// 	}
+// }
 
-	"github.com/garyburd/redigo/redis"
-	"github.com/gorilla/mux"
-	"github.com/octoblu/vulcand-job-logger/wrapper"
-)
+/*
 
-// Logger holds the oxy circuit breaker.
+// Logger logs jobs
 type Logger struct {
 	redisChannel chan []byte
 	router       *mux.Router
@@ -57,3 +64,4 @@ func runLogger(redisURI, queueName string, logChannel chan []byte) {
 		logError("Redis LPUSH failed: %v\n", err)
 	}
 }
+*/

@@ -24,12 +24,12 @@ func GetSpec() *plugin.MiddlewareSpec {
 // The first and the only parameter should be the struct itself, no pointers and other variables.
 // Function should return middleware interface and error in case if the parameters are wrong.
 func FromOther(middleware Middleware) (plugin.Middleware, error) {
-	return NewMiddleware(middleware.RedisURI, middleware.RedisQueueName)
+	return NewMiddleware(middleware.RedisURI, middleware.RedisQueueName, middleware.BackendID)
 }
 
 // FromCli constructs the middleware from the command line
 func FromCli(context *cli.Context) (plugin.Middleware, error) {
-	return NewMiddleware(context.String("redis-uri"), context.String("redis-queue-name"))
+	return NewMiddleware(context.String("redis-uri"), context.String("redis-queue-name"), context.String("backend"))
 }
 
 // CliFlags will be used by Vulcand construct help and CLI command for the vctl command
@@ -44,6 +44,11 @@ func CliFlags() []cli.Flag {
 			Name:   "redis-queue-name",
 			Usage:  "URI where redis can be reached",
 			EnvVar: "LOGGER_REDIS_QUEUE_NAME",
+		},
+		cli.StringFlag{
+			Name:   "backend",
+			Usage:  "id of backend the frontend of this middleware is attached to",
+			EnvVar: "LOGGER_BACKEND",
 		},
 	}
 }

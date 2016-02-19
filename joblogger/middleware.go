@@ -7,17 +7,21 @@ import (
 
 // Middleware is a vulcand middleware that logs to redis
 type Middleware struct {
-	RedisURI, RedisQueueName string
+	RedisURI, RedisQueueName, BackendID string
 }
 
 // NewMiddleware constructs new Middleware instances
-func NewMiddleware(RedisURI, RedisQueueName string) (*Middleware, error) {
-	return &Middleware{RedisURI, RedisQueueName}, nil
+func NewMiddleware(RedisURI, RedisQueueName, BackendID string) (*Middleware, error) {
+	if RedisURI == "" || RedisQueueName == "" {
+		return nil, fmt.Errorf("RedisURI, RedisQueueName, and BackendID are all required. received '%v' and '%v'", RedisURI, RedisQueueName)
+	}
+
+	return &Middleware{RedisURI, RedisQueueName, BackendID}, nil
 }
 
 // NewHandler returns a new Handler instance
 func (middleware *Middleware) NewHandler(next http.Handler) (http.Handler, error) {
-	return NewHandler(middleware.RedisURI, middleware.RedisQueueName, next), nil
+	return NewHandler(middleware.RedisURI, middleware.RedisQueueName, middleware.BackendID, next), nil
 }
 
 // String will be called by loggers inside Vulcand and command line tool.
