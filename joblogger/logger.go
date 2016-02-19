@@ -1,4 +1,4 @@
-package logger
+package joblogger
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/garyburd/redigo/redis"
 	"github.com/gorilla/mux"
-	"github.com/octoblu/vulcand-logger/wrapper"
+	"github.com/octoblu/vulcand-job-logger/wrapper"
 )
 
 // Logger holds the oxy circuit breaker.

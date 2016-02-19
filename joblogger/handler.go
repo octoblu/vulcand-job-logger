@@ -1,4 +1,4 @@
-package logger
+package joblogger
 
 import "net/http"
 

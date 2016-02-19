@@ -1,4 +1,4 @@
-package logger
+package joblogger
 
 import (
 	"github.com/codegangsta/cli"
