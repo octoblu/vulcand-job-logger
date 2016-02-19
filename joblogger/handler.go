@@ -47,6 +47,10 @@ func (handler *Handler) logRequest(logChannel chan []byte) {
 }
 
 func (handler *Handler) redisConn() (redis.Conn, error) {
+	if redisConnections == nil {
+		redisConnections = make(map[string]redis.Conn)
+	}
+
 	key := fmt.Sprintf("%v/%v", handler.redisURI, handler.redisQueueName)
 	conn, ok := redisConnections[key]
 	if ok {
