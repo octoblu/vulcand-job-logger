@@ -12,8 +12,8 @@ type Middleware struct {
 
 // NewMiddleware constructs new Middleware instances
 func NewMiddleware(RedisURI, RedisQueueName, BackendID string) (*Middleware, error) {
-	if RedisURI == "" || RedisQueueName == "" {
-		return nil, fmt.Errorf("RedisURI, RedisQueueName, and BackendID are all required. received '%v' and '%v'", RedisURI, RedisQueueName)
+	if RedisURI == "" || RedisQueueName == "" || BackendID == "" {
+		return nil, fmt.Errorf("RedisURI, RedisQueueName, and BackendID are all required. received '%v', '%v', and '%v'", RedisURI, RedisQueueName, BackendID)
 	}
 
 	return &Middleware{RedisURI, RedisQueueName, BackendID}, nil

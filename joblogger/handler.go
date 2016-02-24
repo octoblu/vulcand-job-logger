@@ -4,13 +4,18 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/garyburd/redigo/redis"
 	"github.com/octoblu/vulcand-job-logger/wrapper"
 )
 
-var redisConnections map[string]redis.Conn
+var redisManager struct {
+	Once        sync.Once
+	Mutex       sync.Mutex
+	Connections map[string]redis.Conn
+}
 
 // Handler implements http.Handler
 type Handler struct {
@@ -28,7 +33,7 @@ func NewHandler(redisURI, redisQueueName, backendID string, next http.Handler) *
 // ServeHTTP will be called each time the request
 // hits the location with this middleware activated
 func (handler *Handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	redisChannel := make(chan []byte)
+	redisChannel := make(chan []byte, 1000)
 
 	go handler.logRequest(redisChannel)
 	wrapped := wrapper.New(rw, redisChannel, time.Now(), handler.backendID)
@@ -47,22 +52,26 @@ func (handler *Handler) logRequest(logChannel chan []byte) {
 }
 
 func (handler *Handler) redisConn() (redis.Conn, error) {
-	if redisConnections == nil {
-		redisConnections = make(map[string]redis.Conn)
-	}
+	redisManager.Once.Do(func() {
+		redisManager.Connections = make(map[string]redis.Conn)
+	})
 
+	redisManager.Mutex.Lock()
 	key := fmt.Sprintf("%v/%v", handler.redisURI, handler.redisQueueName)
-	conn, ok := redisConnections[key]
+	conn, ok := redisManager.Connections[key]
 	if ok {
+		redisManager.Mutex.Unlock()
 		return conn, nil
 	}
 
 	conn, err := redis.DialURL(handler.redisURI)
 	if err != nil {
+		redisManager.Mutex.Unlock()
 		return nil, err
 	}
 
-	redisConnections[key] = conn
+	redisManager.Connections[key] = conn
+	redisManager.Mutex.Unlock()
 	return conn, nil
 }
 
