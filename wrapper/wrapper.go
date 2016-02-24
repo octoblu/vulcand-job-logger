@@ -44,7 +44,7 @@ func (wrapper *Wrapper) logTheEntry(statusCode int) {
 	elapsedTimeNano := time.Now().UnixNano() - wrapper.startTime.UnixNano()
 	elapsedTime := int(elapsedTimeNano / 1000000)
 
-	logEntry := logentry.New("metric:traefik", "http", wrapper.backendName, "anonymous", statusCode, elapsedTime)
+	logEntry := logentry.New("metric:vulcand", "http", wrapper.backendName, "anonymous", statusCode, elapsedTime)
 	logEntryBytes, err := json.Marshal(logEntry)
 	logError("NewJobLogger failed: %v\n", err)
 
