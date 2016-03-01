@@ -31,6 +31,7 @@ func (manager *Manager) Manage() {
 
 func (manager *Manager) message(msg message) {
 	connection := manager.connection(msg.redisURI)
+	defer connection.Close()
 
 	_, err := connection.Do("LPUSH", msg.redisQueueName, msg.data)
 	if err != nil {
