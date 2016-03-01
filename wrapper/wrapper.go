@@ -12,15 +12,18 @@ import (
 
 // Wrapper wraps in silence
 type Wrapper struct {
-	rw           http.ResponseWriter
-	redisChannel chan []byte
-	startTime    time.Time
-	backendName  string
+	rw          http.ResponseWriter
+	onStatus    OnStatus
+	startTime   time.Time
+	backendName string
 }
 
+// OnStatus is called whenever WriteHeader is called on the response writer
+type OnStatus func([]byte)
+
 // New constructs a new Wrapper instance
-func New(rw http.ResponseWriter, redisChannel chan []byte, startTime time.Time, backendName string) *Wrapper {
-	return &Wrapper{rw, redisChannel, startTime, backendName}
+func New(rw http.ResponseWriter, startTime time.Time, backendName string, onStatus OnStatus) *Wrapper {
+	return &Wrapper{rw, onStatus, startTime, backendName}
 }
 
 // Header returns the header map that will be sent by
@@ -52,11 +55,7 @@ func (wrapper *Wrapper) logTheEntry(statusCode int) {
 		return
 	}
 
-	select {
-	case wrapper.redisChannel <- logEntryBytes:
-	default:
-		fmt.Fprintln(os.Stderr, "Redis not ready, skipping logging")
-	}
+	wrapper.onStatus(logEntryBytes)
 }
 
 func logError(fmtMessage string, err error) {
