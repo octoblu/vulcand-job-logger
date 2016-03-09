@@ -25,7 +25,7 @@ func New(redisURI, redisQueueName string) *Connection {
 
 // Publish puts the thing in the redis queue
 func (connection *Connection) Publish(data []byte) {
-	redisPool.Publish(connection.redisURI, connection.redisQueueName, data)
+	go redisPool.Publish(connection.redisURI, connection.redisQueueName, data)
 }
 
 // String will be called by loggers inside Vulcand and command line tool.
