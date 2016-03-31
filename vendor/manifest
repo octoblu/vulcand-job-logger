@@ -1,0 +1,70 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/Sirupsen/logrus",
+			"repository": "https://github.com/Sirupsen/logrus",
+			"revision": "4b6ea7319e214d98c938f12692336f7ca9348d6b",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/buger/goterm",
+			"repository": "https://github.com/buger/goterm",
+			"revision": "45c1d39fe6b92d222144a46a24b526a452082f0f",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/codahale/hdrhistogram",
+			"repository": "https://github.com/codahale/hdrhistogram",
+			"revision": "360314142131c2043d1346f197f86435b287c6da",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/codegangsta/cli",
+			"repository": "https://github.com/codegangsta/cli",
+			"revision": "bc465becccd1d527002fda095fc3c19d9c115029",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/garyburd/redigo/internal",
+			"repository": "https://github.com/garyburd/redigo",
+			"revision": "4ed1111375cbeb698249ffe48dd463e9b0a63a7a",
+			"branch": "master",
+			"path": "/internal",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/garyburd/redigo/redis",
+			"repository": "https://github.com/garyburd/redigo",
+			"revision": "4ed1111375cbeb698249ffe48dd463e9b0a63a7a",
+			"branch": "master",
+			"path": "/redis",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/octoblu/go-logentry",
+			"repository": "https://github.com/octoblu/go-logentry",
+			"revision": "40a2facf003857830fa2ea00360ed2697b521296",
+			"branch": "HEAD",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/vulcand/vulcand",
+			"repository": "https://github.com/vulcand/vulcand",
+			"revision": "475540bb016702d5b7cc4674e37f48ee3e144a69",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "gopkg.in/yaml.v2",
+			"repository": "https://gopkg.in/yaml.v2",
+			"revision": "a83829b6f1293c91addabc89d0571c246397bbf4",
+			"branch": "v2",
+			"notests": true
+		}
+	]
+}
